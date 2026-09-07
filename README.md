@@ -1,34 +1,93 @@
-# Landing page — Corretor de Imóveis
+# Site e painel — Corretor Rafael Moraes
 
-Landing page de captação de leads em **HTML, CSS e JavaScript puro**, sem frameworks e
-sem build. São três páginas independentes:
+Projeto **Vite** com duas partes no mesmo deploy:
 
-- `index.html` — a landing page
-- `politica-de-privacidade.html` — página linkada no rodapé (exigida pela LGPD e pelas
+| Parte | Onde | O que é |
+| --- | --- | --- |
+| Landing page de captação | `/` | App React: seções em componentes, textos em `src/site/conteudo.js` |
+| Painel administrativo | `/admin` | App React que consome a API |
+
+Também fazem parte do site:
+
+- `politica-de-privacidade.html` — linkada no rodapé (exigida pela LGPD e pelas
   políticas de anúncio da Meta e do Google)
-- `404.html` — endereço inexistente, servida automaticamente pela Vercel Tema escuro único (não acompanha o modo
-claro/escuro do sistema).
+- `404.html` — endereço inexistente, servida automaticamente pela Vercel
 
-## Como publicar
+O painel mostra visitantes anônimos com a jornada completa, campanhas por UTM,
+acessos em 7/30/90 dias, tempo médio na página e as conversões — com tags e
+registro de venda. Os dados vêm da API do repositório
+[corretor-rafael-moraes-back](https://github.com/IRMZI/corretor-rafael-moraes-back).
 
-Basta subir o `index.html` em qualquer hospedagem estática (Hostinger, Vercel,
-Netlify, GitHub Pages, cPanel...). Não há dependências para instalar.
+Tema escuro único, que não acompanha o modo claro/escuro do sistema.
+
+## Rodando local
+
+```bash
+npm install
+cp .env.example .env.local     # VITE_API_URL apontando para a API
+npm run dev                    # http://localhost:5173 e /admin
+```
+
+`npm run build` gera o `dist/`; `npm run preview` serve esse build.
+
+Para editar o conteúdo da landing (benefícios, passos, tipos de imóvel, FAQ),
+mexa em `src/site/conteudo.js` — são listas de objetos, sem tocar em JSX. Nome,
+CRECI, WhatsApp e a URL da API ficam em `src/site/config.js`.
+
+## Publicando na Vercel
+
+O `vercel.json` já traz tudo: build `npm run build`, saída `dist` e o rewrite que
+faz as rotas internas do painel (`/admin/conversoes`, `/admin/visitantes`)
+funcionarem ao recarregar a página.
+
+Só falta cadastrar a variável de ambiente no projeto da Vercel:
+
+| Variável | Valor |
+| --- | --- |
+| `VITE_API_URL` | `https://api-rafael.pushagencia.com.br` |
+
+Ela é lida **no build**, então depois de alterar é preciso um novo deploy. Sem
+ela, o painel usa esse mesmo endereço como padrão.
+
+O domínio do site precisa estar no `CORS_ORIGINS` da API — senão o navegador
+bloqueia o login do painel e o rastreamento.
+
+## Estrutura
+
+```
+index.html                    casca da landing (meta tags, Meta Pixel, JSON-LD)
+src/site/
+├── main.jsx  App.jsx         montagem da página e ganchos de rolagem/revelação
+├── config.js                 nome, CRECI, WhatsApp, URL da API
+├── conteudo.js               textos das seções (benefícios, passos, imóveis, FAQ)
+├── lead.js                   máscara, validação, envio do lead e pixels
+├── estilo.css                todo o CSS da landing
+├── componentes/              cabeçalho, rodapé, marca, ícones, botão de WhatsApp
+└── secoes/                   hero, formulário, benefícios, processo, imóveis...
+admin/index.html              casca do painel
+src/admin/                    páginas, componentes e cliente da API do painel
+politica-de-privacidade.html  páginas estáticas, fora do React
+404.html
+public/uploads/               imagens, logo e favicon (servidos em /uploads/...)
+vite.config.js                entradas do build + rota do painel no dev
+vercel.json                   build, saída e rewrite do /admin
+```
 
 ## O que editar antes de publicar
 
-Todo o conteúdo variável está no bloco `CONFIG`, no início do `<script>` no fim do arquivo:
+Todo o conteúdo variável da landing está em `src/site/config.js`:
 
 ```js
 const CONFIG = {
   nome:      'Rafael Moraes',
-  logo:      'uploads/logo.png',
+  logo:      '/uploads/logo.png',
   creci:     '00000',                // <- ainda pendente
   regiao:    'Novo Hamburgo e região',
   email:     'rafaelmoraes@wallstreet.com.br',
   whatsapp:  '5551982606574',        // 55 + DDD + número (somente dígitos, sem o +)
   whatsappLabel: '(51) 98260-6574',
   mensagemWhatsApp: 'Olá! Vim pelo site e gostaria de falar sobre imóveis.',
-  api: 'https://api-rafael.pushagencia.com.br',  // backend (leads + rastreio + painel)
+  api: import.meta.env.VITE_API_URL || 'https://api-rafael.pushagencia.com.br',
   endpoint: '',                      // opcional: outro destino (webhook, CRM, Zapier)
   metodo:   'POST',
   rastrear: true,                    // rastrear visitantes, jornada e campanhas
@@ -36,8 +95,8 @@ const CONFIG = {
 };
 ```
 
-Esses valores são aplicados automaticamente no header, na seção do corretor,
-no rodapé e em todos os botões de WhatsApp.
+Esses valores são usados no cabeçalho, na seção do corretor, no rodapé e em
+todos os botões de WhatsApp — um lugar só, sem repetir em cada componente.
 
 Outros pontos que valem revisar:
 
@@ -45,12 +104,12 @@ Outros pontos que valem revisar:
 - dados do responsável na `politica-de-privacidade.html` (CRECI, e-mail e, se houver,
   razão social e CNPJ)
 - bloco de dados estruturados (JSON-LD), no fim do arquivo
-- imagens (logo, favicon, foto do corretor, fotos dos cards): veja `uploads/README.md`
+- imagens (logo, favicon, foto do corretor, fotos dos cards): veja `public/uploads/README.md`
   — basta subir os arquivos com os nomes indicados. O logo e o favicon funcionam sozinhos
   assim que o arquivo existir
 - imagens dos cards de imóveis e foto do corretor: cada bloco tem um
   `<!-- <img ...> -->` comentado, pronto para uso
-- cores: todas as variáveis ficam no bloco `:root`, no início do `<style>` — `--brand`
+- cores: todas as variáveis ficam no bloco `:root`, no início de `src/site/estilo.css` — `--brand`
   (preenchimento dos botões), `--brand-text` (bordô claro usado em textos e ícones sobre
   o fundo escuro), `--bg`, `--bg-soft`, `--surface` (cards) e `--field` (campos)
 
@@ -64,7 +123,8 @@ e liga as três pontas de uma vez:
 | --- | --- |
 | Envio do formulário | `POST {api}/api/leads` |
 | Rastreamento de visitantes e campanhas | `{api}/track.js` |
-| Painel do corretor | `{api}/admin` |
+
+O painel (`/admin`) fica neste mesmo site e usa a `VITE_API_URL`.
 
 Deixando `api: ''` (e sem `endpoint`), o formulário volta ao modo demonstração:
 valida os campos, exibe a mensagem de sucesso e imprime o lead no console.

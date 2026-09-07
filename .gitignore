@@ -1,12 +1,10 @@
-# capturas de tela e arquivos gerados durante testes
-*.png
-*.jpg
-*.jpeg
-!uploads/*.png
-!uploads/*.jpg
-!uploads/*.jpeg
-!uploads/*.ico
-
-# sistema
+node_modules/
+dist/
+.vercel/
+.env
+.env.local
+.env.*.local
+*.log
 .DS_Store
-Thumbs.db
+.idea/
+.vscode/
