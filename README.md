@@ -82,7 +82,10 @@ Se quiser abrir a conversa do WhatsApp automaticamente após o envio, use
 
 - Formulário com validação, máscara de WhatsApp e mensagem de sucesso sem recarregar a página
 - Campo honeypot anti-spam e captura de UTMs / gclid / fbclid
-- Ganchos prontos para GA4 (`gtag('event','generate_lead')`) e Meta Pixel (`fbq('track','Lead')`)
+- Meta Pixel instalado (ID `1011306658228860`): `PageView` no carregamento e `Lead` no
+  envio do formulário, com o objetivo e o tipo de imóvel como metadados — nenhum dado
+  pessoal é enviado ao pixel. O ID fica no `fbq('init', ...)`, no `<head>`
+- Gancho pronto para GA4 (`gtag('event','generate_lead')`), caso instale o Google Analytics
 - FAQ em accordion acessível, rolagem suave nos CTAs e botão flutuante de WhatsApp
 - Layout mobile-first, sem bibliotecas externas além da fonte Inter
 - Tema escuro em toda a página, com `color-scheme: dark` para os controles nativos

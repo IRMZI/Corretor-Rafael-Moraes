@@ -23,6 +23,20 @@
 <meta property="og:image" content="https://www.seudominio.com.br/uploads/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
+<!-- Meta Pixel — troque o ID em fbq('init', ...) se mudar de conta -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1011306658228860');
+fbq('track', 'PageView');
+</script>
+
 <!-- Fontes (pré-conexão para carregamento mais rápido) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -152,7 +166,10 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* Logo — substitua o SVG por <img src="logo.png" alt="..."> se preferir */
 .brand{display:inline-flex; align-items:center; gap:11px}
 .brand__mark{width:34px; height:34px; flex:none; color:var(--brand)}
-img.brand__mark{width:auto; height:36px; max-width:160px; object-fit:contain} /* quando logo.png existe */
+img.brand__mark{width:auto; height:38px; max-width:190px; object-fit:contain} /* quando logo.png existe */
+/* separador entre o logo e o nome do corretor, só quando o logo é imagem */
+.brand:has(img.brand__mark) .brand__text{padding-left:13px; border-left:1px solid var(--line)}
+.footer img.brand__mark{height:42px}
 .brand__text{display:flex; flex-direction:column; line-height:1.1}
 .brand__name{font-weight:700; font-size:1.0625rem; color:var(--ink); letter-spacing:-.02em}
 .brand__role{font-size:.6875rem; color:var(--muted); letter-spacing:.1em; text-transform:uppercase}
@@ -162,7 +179,12 @@ img.brand__mark{width:auto; height:36px; max-width:160px; object-fit:contain} /*
 .nav a::after{content:""; position:absolute; left:0; right:100%; bottom:0; height:1.5px; background:var(--brand); transition:right .3s var(--ease)}
 .nav a:hover{color:#fff}
 .nav a:hover::after{right:0}
-.header .btn{padding:11px 18px; min-height:44px; font-size:.875rem}
+.header .btn{padding:11px 18px; min-height:44px; font-size:.875rem; white-space:nowrap}
+/* Em telas estreitas o próprio logo já identifica a marca: o nome ao lado sai,
+   para o header não ficar apertado. Vale só quando existe logo.png. */
+@media (max-width:599px){
+  .header .brand:has(img.brand__mark) .brand__text{display:none}
+}
 .header__cta-label--short{display:inline}
 .header__cta-label--full{display:none}
 
@@ -444,9 +466,7 @@ img.brand__mark{width:auto; height:36px; max-width:160px; object-fit:contain} /*
 .footer__grid{display:grid; gap:30px; padding:52px 0 34px}
 .footer .brand__name{color:#fff}
 .footer .brand__role{color:#6B737D}
-.footer .brand__mark{color:#fff}
-/* No rodapé escuro o logo aparece em branco. Remova esta linha para manter as cores originais. */
-.footer img.brand__mark{filter:brightness(0) invert(1)}
+.footer .brand__mark{color:#fff}  /* vale só para a marca provisória em SVG */
 .footer h4{color:#fff; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; margin-bottom:14px; font-weight:600}
 .footer p{margin:0 0 8px; max-width:38ch}
 .footer li{margin-bottom:9px}
@@ -454,7 +474,8 @@ img.brand__mark{width:auto; height:36px; max-width:160px; object-fit:contain} /*
 .footer a:hover{color:#fff}
 .footer__bottom{
   display:flex; flex-wrap:wrap; gap:10px 20px; justify-content:space-between; align-items:center;
-  padding:20px 0 26px; border-top:1px solid var(--line); font-size:.8125rem;
+  /* espaço extra embaixo para o botão flutuante do WhatsApp não cobrir os links */
+  padding:20px 0 84px; border-top:1px solid var(--line); font-size:.8125rem;
 }
 @media (min-width:768px){.footer__grid{grid-template-columns:1.4fr 1fr 1fr; gap:40px}}
 
@@ -490,6 +511,10 @@ img.brand__mark{width:auto; height:36px; max-width:160px; object-fit:contain} /*
 </style>
 </head>
 <body>
+<!-- Meta Pixel: fallback para navegadores sem JavaScript -->
+<noscript><img height="1" width="1" style="display:none" alt=""
+src="https://www.facebook.com/tr?id=1011306658228860&ev=PageView&noscript=1"></noscript>
+
 <script>document.documentElement.classList.add('js');</script>
 
 <!-- =========================================================
@@ -1334,9 +1359,16 @@ const CONFIG = {
       sucesso.classList.add('is-visible');
       sucesso.scrollIntoView({ behavior:'smooth', block:'center' });
 
-      // Gancho para pixels de conversão (Google Ads / Meta / GA4)
+      /* Conversão: dispara o Lead no Meta Pixel (e no GA4, se existir).
+         Só metadados do formulário — nenhum dado pessoal é enviado. */
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead', {
+          content_name:     'Formulário landing page',
+          content_category: payload.objetivo,
+          property_type:    payload.tipo_imovel
+        });
+      }
       if (typeof gtag === 'function') gtag('event', 'generate_lead');
-      if (typeof fbq  === 'function') fbq('track', 'Lead');
 
       if (CONFIG.abrirWhatsAppAposEnvio) {
         const msg = `Olá! Meu nome é ${payload.nome}. Acabei de preencher o formulário do site procurando ${payload.tipo_imovel} em ${payload.cidade}.`;
