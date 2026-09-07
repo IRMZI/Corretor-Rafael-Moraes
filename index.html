@@ -5,7 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Encontre seu imóvel ideal | Corretor de Imóveis</title>
 <meta name="description" content="Encontre casas, apartamentos, terrenos e oportunidades imobiliárias com atendimento personalizado.">
-<meta name="theme-color" content="#8A0B27">
+<meta name="theme-color" content="#0A0B0D">
+
+<!-- Favicon — arquivos na pasta uploads/ (veja uploads/README.md) -->
+<link rel="icon" href="uploads/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="uploads/favicon.png">
+<link rel="apple-touch-icon" href="uploads/apple-touch-icon.png">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://www.seudominio.com.br/">
 
@@ -15,6 +20,7 @@
 <meta property="og:title" content="Encontre seu imóvel ideal | Corretor de Imóveis">
 <meta property="og:description" content="Encontre casas, apartamentos, terrenos e oportunidades imobiliárias com atendimento personalizado.">
 <meta property="og:url" content="https://www.seudominio.com.br/">
+<meta property="og:image" content="https://www.seudominio.com.br/uploads/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <!-- Fontes (pré-conexão para carregamento mais rápido) -->
@@ -28,26 +34,33 @@
    Altere as cores e o raio das bordas em um único lugar.
    ========================================================= */
 :root{
-  --brand:        #8A0B27;   /* cor de destaque (bordô do logo) */
-  --brand-dark:   #6E0820;
-  --brand-soft:   #FBF2F4;
-  --brand-line:   #EFD9DF;
+  color-scheme: dark;        /* controles nativos (select, scrollbar) em tema escuro */
 
-  --ink:          #0F1113;   /* preto dos títulos */
-  --ink-2:        #33383E;   /* cinza escuro dos textos */
-  --muted:        #6E747C;   /* textos de apoio */
-  --line:         #E6E7EA;   /* bordas */
-  --bg:           #FFFFFF;
-  --bg-soft:      #F7F7F6;   /* fundo claro alternado */
-  --dark:         #121417;   /* fundo escuro do CTA final/footer */
+  --brand:        #B3123A;   /* bordô da marca, ajustado para fundo escuro */
+  --brand-dark:   #CE1745;   /* hover: clareia, em vez de escurecer */
+  --brand-text:   #E04A66;   /* bordô claro, para textos e ícones sobre o escuro */
+  --brand-soft:   rgba(179,18,58,.16);
+  --brand-line:   rgba(224,74,102,.32);
+
+  --ink:          #F4F6F8;   /* títulos */
+  --ink-2:        #C4CAD2;   /* textos */
+  --muted:        #8A929C;   /* textos de apoio */
+  --line:         rgba(255,255,255,.10);
+  --line-strong:  rgba(255,255,255,.20);
+  --bg:           #0A0B0D;   /* fundo da página */
+  --bg-soft:      #0F1114;   /* fundo das seções alternadas */
+  --surface:      #14171B;   /* cards e formulário */
+  --surface-2:    #1A1E23;   /* hover das superfícies */
+  --field:        #101317;   /* fundo dos campos */
+  --dark:         #07080A;   /* CTA final e rodapé */
 
   --radius-sm: 10px;
   --radius:    14px;
   --radius-lg: 20px;
 
-  --shadow-sm: 0 1px 2px rgba(16,18,20,.05), 0 1px 3px rgba(16,18,20,.04);
-  --shadow:    0 4px 16px rgba(16,18,20,.06), 0 1px 3px rgba(16,18,20,.04);
-  --shadow-lg: 0 24px 60px -20px rgba(16,18,20,.22), 0 4px 14px rgba(16,18,20,.05);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.45);
+  --shadow:    0 8px 24px rgba(0,0,0,.45);
+  --shadow-lg: 0 30px 70px -25px rgba(0,0,0,.8), 0 2px 10px rgba(0,0,0,.4);
 
   --container: 1160px;
   --header-h: 72px;
@@ -71,6 +84,7 @@ body{
   text-rendering:optimizeLegibility;
 }
 img{max-width:100%;display:block}
+::selection{background:var(--brand); color:#fff}
 h1,h2,h3,h4{color:var(--ink); margin:0 0 .5em; line-height:1.15; letter-spacing:-.02em; font-weight:600}
 h1{font-size:clamp(2rem,5.4vw,3.35rem); letter-spacing:-.035em; font-weight:700}
 h2{font-size:clamp(1.6rem,3.6vw,2.35rem); letter-spacing:-.03em}
@@ -92,9 +106,9 @@ button,input,select,textarea{font:inherit;color:inherit}
 .eyebrow{
   display:inline-flex; align-items:center; gap:8px;
   font-size:.75rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
-  color:var(--brand); margin-bottom:14px;
+  color:var(--brand-text); margin-bottom:14px;
 }
-.eyebrow::before{content:""; width:18px; height:1px; background:var(--brand); opacity:.5}
+.eyebrow::before{content:""; width:18px; height:1px; background:var(--brand-text); opacity:.55}
 
 /* =========================================================
    3. BOTÕES
@@ -109,14 +123,14 @@ button,input,select,textarea{font:inherit;color:inherit}
              border-color .25s var(--ease), transform .18s var(--ease), box-shadow .25s var(--ease);
 }
 .btn:active{transform:translateY(1px)}
-.btn--primary{background:var(--brand); color:#fff; box-shadow:0 6px 18px -8px rgba(138,11,39,.65)}
-.btn--primary:hover{background:var(--brand-dark); box-shadow:0 10px 26px -10px rgba(138,11,39,.7)}
-.btn--dark{background:var(--ink); color:#fff}
-.btn--dark:hover{background:#000}
-.btn--light{background:#fff; color:var(--ink)}
-.btn--light:hover{background:#F1F1F0}
-.btn--ghost{background:#fff; color:var(--ink); border-color:var(--line); box-shadow:var(--shadow-sm)}
-.btn--ghost:hover{border-color:#C9CBD0; background:#FCFCFC}
+.btn--primary{background:var(--brand); color:#fff; box-shadow:0 8px 24px -10px rgba(179,18,58,.9)}
+.btn--primary:hover{background:var(--brand-dark); box-shadow:0 12px 30px -10px rgba(206,23,69,.95)}
+.btn--dark{background:var(--surface-2); color:var(--ink); border-color:var(--line-strong)}
+.btn--dark:hover{background:#22272D}
+.btn--light{background:#fff; color:#0A0B0D}
+.btn--light:hover{background:#E8EAED}
+.btn--ghost{background:var(--surface); color:var(--ink); border-color:var(--line-strong)}
+.btn--ghost:hover{background:var(--surface-2); border-color:rgba(255,255,255,.32)}
 .btn--block{width:100%}
 .btn--lg{padding:17px 26px; min-height:58px; font-size:1rem}
 .btn .icon{width:18px;height:18px;flex:none}
@@ -126,18 +140,19 @@ button,input,select,textarea{font:inherit;color:inherit}
    ========================================================= */
 .header{
   position:sticky; top:0; z-index:60;
-  background:rgba(255,255,255,.86);
+  background:rgba(10,11,13,.82);
   -webkit-backdrop-filter:saturate(180%) blur(12px);
   backdrop-filter:saturate(180%) blur(12px);
   border-bottom:1px solid transparent;
   transition:border-color .3s var(--ease), box-shadow .3s var(--ease);
 }
-.header.is-scrolled{border-bottom-color:var(--line); box-shadow:0 1px 12px rgba(16,18,20,.04)}
+.header.is-scrolled{border-bottom-color:var(--line); box-shadow:0 1px 16px rgba(0,0,0,.5)}
 .header__inner{display:flex; align-items:center; justify-content:space-between; gap:16px; height:var(--header-h)}
 
 /* Logo — substitua o SVG por <img src="logo.png" alt="..."> se preferir */
 .brand{display:inline-flex; align-items:center; gap:11px}
 .brand__mark{width:34px; height:34px; flex:none; color:var(--brand)}
+img.brand__mark{width:auto; height:36px; max-width:160px; object-fit:contain} /* quando logo.png existe */
 .brand__text{display:flex; flex-direction:column; line-height:1.1}
 .brand__name{font-weight:700; font-size:1.0625rem; color:var(--ink); letter-spacing:-.02em}
 .brand__role{font-size:.6875rem; color:var(--muted); letter-spacing:.1em; text-transform:uppercase}
@@ -145,7 +160,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .nav{display:none; gap:28px; margin-left:auto; margin-right:8px}
 .nav a{font-size:.9375rem; color:var(--ink-2); font-weight:500; position:relative; padding:4px 0; transition:color .2s var(--ease)}
 .nav a::after{content:""; position:absolute; left:0; right:100%; bottom:0; height:1.5px; background:var(--brand); transition:right .3s var(--ease)}
-.nav a:hover{color:var(--ink)}
+.nav a:hover{color:#fff}
 .nav a:hover::after{right:0}
 .header .btn{padding:11px 18px; min-height:44px; font-size:.875rem}
 .header__cta-label--short{display:inline}
@@ -163,19 +178,19 @@ button,input,select,textarea{font:inherit;color:inherit}
 .hero{position:relative; padding:44px 0 64px; overflow:hidden}
 .hero::before{ /* brilho sutil de fundo */
   content:""; position:absolute; inset:-30% 40% 40% -20%;
-  background:radial-gradient(60% 60% at 40% 40%, rgba(138,11,39,.07), transparent 70%);
+  background:radial-gradient(60% 60% at 40% 40%, rgba(179,18,58,.22), transparent 70%);
   pointer-events:none;
 }
 .hero__grid{position:relative; display:grid; gap:36px; align-items:center}
 .hero__title{margin-bottom:18px}
-.hero__title em{font-style:normal; color:var(--brand)}
+.hero__title em{font-style:normal; color:var(--brand-text)}
 .hero__lead{font-size:1.0625rem; color:var(--muted); max-width:34em; margin-bottom:26px}
 
 .hero__list{display:grid; gap:12px; margin:0 0 30px}
 .hero__list li{display:flex; align-items:flex-start; gap:11px; font-size:.9375rem; color:var(--ink-2); font-weight:500}
 .check{
   width:22px;height:22px;flex:none;border-radius:50%;
-  background:var(--brand-soft); color:var(--brand);
+  background:var(--brand-soft); color:var(--brand-text);
   display:grid;place-items:center; margin-top:1px;
 }
 .check svg{width:12px;height:12px}
@@ -191,7 +206,7 @@ button,input,select,textarea{font:inherit;color:inherit}
    6. CARD DO FORMULÁRIO
    ========================================================= */
 .form-card{
-  position:relative; background:#fff;
+  position:relative; background:var(--surface);
   border:1px solid var(--line); border-radius:var(--radius-lg);
   box-shadow:var(--shadow-lg); padding:26px 22px 24px;
 }
@@ -205,29 +220,29 @@ button,input,select,textarea{font:inherit;color:inherit}
 .field label .opt{font-weight:400; color:var(--muted)}
 .field input,.field select{
   width:100%; min-height:52px; padding:13px 14px;
-  background:#fff; border:1px solid var(--line); border-radius:var(--radius-sm);
+  background:var(--field); border:1px solid var(--line); border-radius:var(--radius-sm);
   font-size:1rem; color:var(--ink);
   transition:border-color .2s var(--ease), box-shadow .2s var(--ease), background-color .2s var(--ease);
   appearance:none; -webkit-appearance:none;
 }
-.field input::placeholder{color:#A7ACB3}
-.field input:hover,.field select:hover{border-color:#C9CBD0}
+.field input::placeholder{color:#6B737D}
+.field input:hover,.field select:hover{border-color:var(--line-strong)}
 .field input:focus,.field select:focus{
-  outline:none; border-color:var(--brand);
-  box-shadow:0 0 0 3px rgba(138,11,39,.12);
+  outline:none; border-color:var(--brand-text);
+  box-shadow:0 0 0 3px rgba(224,74,102,.18);
 }
 .field select{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236E747C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238A929C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   background-repeat:no-repeat; background-position:right 13px center; background-size:18px;
   padding-right:42px; cursor:pointer;
 }
 .field select:invalid,
-.field select:has(option[value=""]:checked){color:#A7ACB3} /* placeholder do select */
+.field select:has(option[value=""]:checked){color:#6B737D} /* placeholder do select */
 
 /* Estados de erro */
-.field.has-error input,.field.has-error select{border-color:#C0392B; background:#FEF7F6}
-.field.has-error input:focus,.field.has-error select:focus{box-shadow:0 0 0 3px rgba(192,57,43,.12)}
-.error-msg{display:none; font-size:.75rem; color:#C0392B; font-weight:500}
+.field.has-error input,.field.has-error select{border-color:#F87171; background:rgba(248,113,113,.07)}
+.field.has-error input:focus,.field.has-error select:focus{box-shadow:0 0 0 3px rgba(248,113,113,.16)}
+.error-msg{display:none; font-size:.75rem; color:#FCA5A5; font-weight:500}
 .field.has-error .error-msg{display:block}
 
 /* Honeypot anti-spam (invisível para pessoas) */
@@ -241,7 +256,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 .form-success.is-visible{display:block; animation:fadeUp .5s var(--ease) both}
 .form-success__icon{
   width:56px;height:56px;margin:0 auto 18px;border-radius:50%;
-  background:var(--brand-soft); color:var(--brand); display:grid; place-items:center;
+  background:var(--brand-soft); color:var(--brand-text); display:grid; place-items:center;
+  border:1px solid var(--brand-line);
 }
 .form-success__icon svg{width:28px;height:28px}
 .form-success h3{font-size:1.25rem; margin-bottom:8px}
@@ -268,14 +284,14 @@ button,input,select,textarea{font:inherit;color:inherit}
    ========================================================= */
 .cards{display:grid; gap:16px}
 .card{
-  background:#fff; border:1px solid var(--line); border-radius:var(--radius);
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
   padding:26px 22px; box-shadow:var(--shadow-sm);
   transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
 }
-.card:hover{transform:translateY(-3px); box-shadow:var(--shadow); border-color:#DADCE0}
+.card:hover{transform:translateY(-3px); box-shadow:var(--shadow); border-color:var(--line-strong); background:var(--surface-2)}
 .card__icon{
   width:44px;height:44px;border-radius:12px; margin-bottom:16px;
-  background:var(--brand-soft); color:var(--brand); display:grid; place-items:center;
+  background:var(--brand-soft); color:var(--brand-text); display:grid; place-items:center;
   border:1px solid var(--brand-line);
 }
 .card__icon svg{width:21px;height:21px}
@@ -294,13 +310,13 @@ button,input,select,textarea{font:inherit;color:inherit}
   position:absolute; left:0; top:0;
   width:46px;height:46px;border-radius:50%;
   display:grid;place-items:center;
-  background:#fff; border:1px solid var(--brand-line); color:var(--brand);
+  background:var(--surface); border:1px solid var(--brand-line); color:var(--brand-text);
   font-weight:700; font-size:.9375rem; letter-spacing:-.02em;
   box-shadow:var(--shadow-sm); z-index:1;
 }
 .step::after{ /* linha vertical no mobile */
   content:""; position:absolute; left:23px; top:52px; bottom:-28px; width:1px;
-  background:linear-gradient(180deg,var(--line),rgba(230,231,234,0));
+  background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,0));
 }
 .step:last-child::after{display:none}
 .step h3{font-size:1.125rem; margin-bottom:6px}
@@ -311,7 +327,7 @@ button,input,select,textarea{font:inherit;color:inherit}
   .step{padding-left:0; padding-top:66px}
   .step__num{top:0}
   .step::after{left:58px; right:-32px; top:23px; bottom:auto; width:auto; height:1px;
-    background:linear-gradient(90deg,var(--line),rgba(230,231,234,0))}
+    background:linear-gradient(90deg,rgba(255,255,255,.16),rgba(255,255,255,0))}
 }
 
 /* =========================================================
@@ -319,7 +335,7 @@ button,input,select,textarea{font:inherit;color:inherit}
    ========================================================= */
 .props{display:grid; gap:20px}
 .prop{
-  background:#fff; border:1px solid var(--line); border-radius:var(--radius-lg);
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-lg);
   overflow:hidden; display:flex; flex-direction:column;
   box-shadow:var(--shadow-sm);
   transition:transform .3s var(--ease), box-shadow .3s var(--ease);
@@ -327,14 +343,15 @@ button,input,select,textarea{font:inherit;color:inherit}
 .prop:hover{transform:translateY(-4px); box-shadow:var(--shadow-lg)}
 /* Espaço para imagem — troque o conteúdo por <img src="sua-foto.jpg" alt=""> */
 .prop__media{
-  position:relative; aspect-ratio:16/11; background:linear-gradient(140deg,#EFEFED 0%,#E4E4E1 55%,#EDE7E8 100%);
-  display:grid; place-items:center; color:#B9BBBE; border-bottom:1px solid var(--line); overflow:hidden;
+  position:relative; aspect-ratio:16/11; background:linear-gradient(140deg,#181C21 0%,#111419 55%,#1B1216 100%);
+  display:grid; place-items:center; color:#3D444C; border-bottom:1px solid var(--line); overflow:hidden;
 }
 .prop__media img{width:100%;height:100%;object-fit:cover}
 .prop__media svg{width:44px;height:44px}
 .prop__tag{
   position:absolute; top:14px; left:14px;
-  background:rgba(255,255,255,.94); color:var(--ink);
+  background:rgba(10,11,13,.78); color:var(--ink); border:1px solid var(--line);
+  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
   font-size:.6875rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
   padding:6px 11px; border-radius:100px; box-shadow:var(--shadow-sm);
 }
@@ -352,25 +369,26 @@ button,input,select,textarea{font:inherit;color:inherit}
 .broker__photo{
   position:relative; aspect-ratio:4/5; max-width:420px; width:100%;
   border-radius:var(--radius-lg); overflow:hidden; border:1px solid var(--line);
-  background:linear-gradient(160deg,#F0EFEE,#E6E5E3); display:grid; place-items:center; color:#B9BBBE;
+  background:linear-gradient(160deg,#171A1F,#0E1013); display:grid; place-items:center; color:#3D444C;
   box-shadow:var(--shadow);
 }
 .broker__photo img{width:100%;height:100%;object-fit:cover}
 .broker__photo svg{width:64px;height:64px}
 .broker__badge{
   position:absolute; left:16px; bottom:16px; right:16px;
-  background:rgba(255,255,255,.95); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  background:rgba(10,11,13,.82); border:1px solid var(--line);
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
   border-radius:var(--radius); padding:13px 16px; box-shadow:var(--shadow-sm);
 }
 .broker__badge strong{display:block; color:var(--ink); font-size:.9375rem; letter-spacing:-.01em}
 .broker__badge span{font-size:.75rem; color:var(--muted)}
 .broker__info{max-width:520px}
-.broker__meta{display:grid; gap:12px; margin:22px 0 26px; padding:20px; background:#fff; border:1px solid var(--line); border-radius:var(--radius)}
+.broker__meta{display:grid; gap:12px; margin:22px 0 26px; padding:20px; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius)}
 .broker__meta div{ /* mobile: rótulo acima do valor */
   display:grid; grid-template-columns:auto 1fr; column-gap:11px; row-gap:2px;
   align-items:center; font-size:.9375rem;
 }
-.broker__meta svg{width:17px;height:17px;color:var(--brand);flex:none;grid-row:span 2}
+.broker__meta svg{width:17px;height:17px;color:var(--brand-text);flex:none;grid-row:span 2}
 @media (min-width:560px){ /* telas maiores: tudo na mesma linha */
   .broker__meta div{grid-template-columns:auto auto 1fr}
   .broker__meta svg{grid-row:auto}
@@ -387,8 +405,8 @@ button,input,select,textarea{font:inherit;color:inherit}
    11. FAQ (accordion)
    ========================================================= */
 .faq{max-width:780px; margin-inline:auto; display:grid; gap:12px}
-.faq__item{background:#fff; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; transition:border-color .25s var(--ease), box-shadow .25s var(--ease)}
-.faq__item:hover{border-color:#D3D5D9}
+.faq__item{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; transition:border-color .25s var(--ease), box-shadow .25s var(--ease)}
+.faq__item:hover{border-color:var(--line-strong)}
 .faq__item.is-open{border-color:var(--brand-line); box-shadow:var(--shadow-sm)}
 .faq__q{
   width:100%; display:flex; align-items:center; justify-content:space-between; gap:16px;
@@ -396,7 +414,7 @@ button,input,select,textarea{font:inherit;color:inherit}
   font-size:1rem; font-weight:600; color:var(--ink); letter-spacing:-.015em; min-height:64px;
 }
 .faq__icon{
-  width:26px;height:26px;flex:none;border-radius:50%; background:var(--bg-soft); color:var(--brand);
+  width:26px;height:26px;flex:none;border-radius:50%; background:rgba(255,255,255,.06); color:var(--brand-text);
   display:grid; place-items:center; transition:transform .3s var(--ease), background-color .25s var(--ease);
 }
 .faq__icon svg{width:14px;height:14px}
@@ -407,26 +425,28 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* =========================================================
    12. CTA FINAL
    ========================================================= */
-.cta-final{background:var(--dark); color:#fff; position:relative; overflow:hidden}
+.cta-final{background:var(--dark); color:#fff; position:relative; overflow:hidden; border-block:1px solid var(--line)}
 .cta-final::before{
   content:""; position:absolute; inset:auto -10% -60% 30%; height:120%;
-  background:radial-gradient(50% 50% at 50% 50%, rgba(138,11,39,.4), transparent 70%);
+  background:radial-gradient(50% 50% at 50% 50%, rgba(179,18,58,.45), transparent 70%);
   pointer-events:none;
 }
 .cta-final__inner{position:relative; text-align:center; max-width:680px; margin-inline:auto; padding:76px 0}
 .cta-final h2{color:#fff; margin-bottom:14px}
 .cta-final p{color:rgba(255,255,255,.7); font-size:1.0625rem; margin-bottom:30px}
-.cta-final .eyebrow{color:#E8A6B4}
-.cta-final .eyebrow::before{background:#E8A6B4}
+.cta-final .eyebrow{color:var(--brand-text)}
+.cta-final .eyebrow::before{background:var(--brand-text)}
 
 /* =========================================================
    13. FOOTER
    ========================================================= */
-.footer{background:var(--dark); color:rgba(255,255,255,.62); border-top:1px solid rgba(255,255,255,.09); font-size:.875rem}
+.footer{background:var(--dark); color:var(--muted); border-top:1px solid var(--line); font-size:.875rem}
 .footer__grid{display:grid; gap:30px; padding:52px 0 34px}
 .footer .brand__name{color:#fff}
-.footer .brand__role{color:rgba(255,255,255,.45)}
+.footer .brand__role{color:#6B737D}
 .footer .brand__mark{color:#fff}
+/* No rodapé escuro o logo aparece em branco. Remova esta linha para manter as cores originais. */
+.footer img.brand__mark{filter:brightness(0) invert(1)}
 .footer h4{color:#fff; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; margin-bottom:14px; font-weight:600}
 .footer p{margin:0 0 8px; max-width:38ch}
 .footer li{margin-bottom:9px}
@@ -434,7 +454,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .footer a:hover{color:#fff}
 .footer__bottom{
   display:flex; flex-wrap:wrap; gap:10px 20px; justify-content:space-between; align-items:center;
-  padding:20px 0 26px; border-top:1px solid rgba(255,255,255,.09); font-size:.8125rem;
+  padding:20px 0 26px; border-top:1px solid var(--line); font-size:.8125rem;
 }
 @media (min-width:768px){.footer__grid{grid-template-columns:1.4fr 1fr 1fr; gap:40px}}
 
@@ -760,7 +780,7 @@ button,input,select,textarea{font:inherit;color:inherit}
         <article class="prop reveal">
           <div class="prop__media">
             <span class="prop__tag">Apartamentos</span>
-            <!-- <img src="imagens/apartamentos.jpg" alt="Apartamentos" loading="lazy" width="800" height="550"> -->
+            <!-- <img src="uploads/apartamentos.jpg" alt="Apartamentos" loading="lazy" width="800" height="550"> -->
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 21V6l6-3v18M14 21V10l6-3v14M7 8h.01M7 12h.01M7 16h.01M17 12h.01M17 16h.01"/></svg>
           </div>
           <div class="prop__body">
@@ -773,7 +793,7 @@ button,input,select,textarea{font:inherit;color:inherit}
         <article class="prop reveal">
           <div class="prop__media">
             <span class="prop__tag">Casas</span>
-            <!-- <img src="imagens/casas.jpg" alt="Casas" loading="lazy" width="800" height="550"> -->
+            <!-- <img src="uploads/casas.jpg" alt="Casas" loading="lazy" width="800" height="550"> -->
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10Z"/></svg>
           </div>
           <div class="prop__body">
@@ -786,7 +806,7 @@ button,input,select,textarea{font:inherit;color:inherit}
         <article class="prop reveal">
           <div class="prop__media">
             <span class="prop__tag">Terrenos</span>
-            <!-- <img src="imagens/terrenos.jpg" alt="Terrenos" loading="lazy" width="800" height="550"> -->
+            <!-- <img src="uploads/terrenos.jpg" alt="Terrenos" loading="lazy" width="800" height="550"> -->
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 19h18M5 19V9l7-4 7 4v10M9 19v-5h6v5"/></svg>
           </div>
           <div class="prop__body">
@@ -806,7 +826,7 @@ button,input,select,textarea{font:inherit;color:inherit}
     <div class="container broker">
       <!-- Espaço para a foto do corretor -->
       <div class="broker__photo reveal">
-        <!-- <img src="imagens/corretor.jpg" alt="Rafael Moraes, corretor de imóveis" loading="lazy" width="840" height="1050"> -->
+        <!-- <img src="uploads/corretor.jpg" alt="Rafael Moraes, corretor de imóveis" loading="lazy" width="840" height="1050"> -->
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="12" cy="9" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
         <div class="broker__badge">
           <strong data-brand-name>Rafael Moraes</strong>
@@ -954,7 +974,7 @@ button,input,select,textarea{font:inherit;color:inherit}
         <h4>Contato</h4>
         <ul>
           <li><a href="#" data-whatsapp><span data-whatsapp-label>(00) 00000-0000</span> · WhatsApp</a></li>
-          <li><a href="mailto:contato@seudominio.com.br" data-email-link>contato@seudominio.com.br</a></li>
+          <li><a href="mailto:rafaelmoraes@wallstreet.com.br" data-email-link>rafaelmoraes@wallstreet.com.br</a></li>
           <li data-regiao>Sua cidade e região</li>
         </ul>
       </div>
@@ -992,9 +1012,9 @@ button,input,select,textarea{font:inherit;color:inherit}
   "name": "Rafael Moraes - Corretor de Imóveis",
   "description": "Encontre casas, apartamentos, terrenos e oportunidades imobiliárias com atendimento personalizado.",
   "url": "https://www.seudominio.com.br/",
-  "telephone": "+5500000000000",
-  "email": "contato@seudominio.com.br",
-  "areaServed": "Sua cidade e região",
+  "telephone": "+5551982606574",
+  "email": "rafaelmoraes@wallstreet.com.br",
+  "areaServed": "Novo Hamburgo e região, RS",
   "priceRange": "$$"
 }
 </script>
@@ -1004,12 +1024,13 @@ button,input,select,textarea{font:inherit;color:inherit}
    CONFIGURAÇÃO — edite apenas este bloco para publicar
    ========================================================= */
 const CONFIG = {
-  nome:      'Rafael Moraes',                 // nome exibido no site
+  nome:      'Rafael Moraes',                  // nome exibido no site
+  logo:      'uploads/logo.png',               // arquivo do logo (pasta uploads/)
   creci:     '00000',                          // número do CRECI
-  regiao:    'Sua cidade e região',            // região de atuação
-  email:     'contato@seudominio.com.br',      // e-mail de contato
-  whatsapp:  '5500000000000',                  // somente números: 55 + DDD + número
-  whatsappLabel: '(00) 00000-0000',            // como o telefone aparece na tela
+  regiao:    'Novo Hamburgo e região',         // região de atuação
+  email:     'rafaelmoraes@wallstreet.com.br', // e-mail de contato
+  whatsapp:  '5551982606574',                  // somente números: 55 + DDD + número
+  whatsappLabel: '(51) 98260-6574',            // como o telefone aparece na tela
   mensagemWhatsApp: 'Olá! Vim pelo site e gostaria de falar sobre imóveis.',
 
   /* INTEGRAÇÃO DO FORMULÁRIO
@@ -1030,6 +1051,20 @@ const CONFIG = {
   const linkWhats = numero => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(CONFIG.mensagemWhatsApp)}`;
 
   document.querySelectorAll('[data-brand-name]').forEach(el => el.textContent = CONFIG.nome);
+
+  /* Logo: se existir um arquivo logo.png (ou .svg) na mesma pasta, ele substitui
+     automaticamente a marca provisória no header e no rodapé. */
+  const teste = new Image();
+  teste.onload = () => {
+    document.querySelectorAll('svg.brand__mark').forEach(svg => {
+      const img = new Image();
+      img.src = CONFIG.logo;
+      img.alt = CONFIG.nome;
+      img.className = 'brand__mark';
+      svg.replaceWith(img);
+    });
+  };
+  teste.src = CONFIG.logo;
   document.querySelectorAll('[data-creci]').forEach(el => el.textContent = CONFIG.creci);
   document.querySelectorAll('[data-regiao]').forEach(el => el.textContent = CONFIG.regiao);
   document.querySelectorAll('[data-whatsapp-label]').forEach(el => el.textContent = CONFIG.whatsappLabel);

@@ -1,0 +1,12 @@
+# capturas de tela e arquivos gerados durante testes
+*.png
+*.jpg
+*.jpeg
+!uploads/*.png
+!uploads/*.jpg
+!uploads/*.jpeg
+!uploads/*.ico
+
+# sistema
+.DS_Store
+Thumbs.db
