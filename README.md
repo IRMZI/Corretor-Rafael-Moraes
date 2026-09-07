@@ -23,8 +23,10 @@ const CONFIG = {
   whatsapp:  '5551982606574',        // 55 + DDD + número (somente dígitos, sem o +)
   whatsappLabel: '(51) 98260-6574',
   mensagemWhatsApp: 'Olá! Vim pelo site e gostaria de falar sobre imóveis.',
-  endpoint: '',                      // webhook / CRM que vai receber os leads
+  api: 'https://api-rafael.pushagencia.com.br',  // backend (leads + rastreio + painel)
+  endpoint: '',                      // opcional: outro destino (webhook, CRM, Zapier)
   metodo:   'POST',
+  rastrear: true,                    // rastrear visitantes, jornada e campanhas
   abrirWhatsAppAposEnvio: false
 };
 ```
@@ -46,13 +48,24 @@ Outros pontos que valem revisar:
   o fundo escuro), `--bg`, `--bg-soft`, `--surface` (cards) e `--field` (campos)
 - link da Política de Privacidade no rodapé
 
-## Integração do formulário
+## Integração com o backend
 
-Sem `CONFIG.endpoint`, o formulário funciona em modo demonstração: valida os campos,
-exibe a mensagem de sucesso e imprime o lead no console do navegador.
+O `CONFIG.api` aponta para a API do repositório
+[corretor-rafael-moraes-back](https://github.com/IRMZI/corretor-rafael-moraes-back)
+e liga as três pontas de uma vez:
 
-Preenchendo `CONFIG.endpoint` com a URL de um webhook (Zapier, Make, n8n, RD Station,
-Pipedrive, API própria etc.), o lead é enviado via `fetch` em JSON:
+| O quê | Para onde vai |
+| --- | --- |
+| Envio do formulário | `POST {api}/api/leads` |
+| Rastreamento de visitantes e campanhas | `{api}/track.js` |
+| Painel do corretor | `{api}/admin` |
+
+Deixando `api: ''` (e sem `endpoint`), o formulário volta ao modo demonstração:
+valida os campos, exibe a mensagem de sucesso e imprime o lead no console.
+
+Para mandar o lead para outro destino (Zapier, Make, n8n, RD Station, Pipedrive),
+preencha `CONFIG.endpoint` — ele tem prioridade sobre o `CONFIG.api`. O lead é
+enviado via `fetch` em JSON:
 
 ```json
 {
@@ -68,6 +81,8 @@ Pipedrive, API própria etc.), o lead é enviado via `fetch` em JSON:
   "pagina": "https://...",
   "referrer": "https://google.com/",
   "utm": { "utm_source": "google", "gclid": "..." },
+  "visitante_uid": "id anônimo do visitante (quando o rastreio está ativo)",
+  "sessao_uid": "id da visita",
   "enviado_em": "2026-01-01T12:00:00.000Z"
 }
 ```
@@ -77,6 +92,19 @@ a função `enviarLead()`.
 
 Se quiser abrir a conversa do WhatsApp automaticamente após o envio, use
 `abrirWhatsAppAposEnvio: true`.
+
+### Rastreamento de visitantes
+
+Com `CONFIG.api` preenchido e `rastrear: true`, a página carrega o `track.js` do
+backend. Ele identifica o visitante anônimo (id aleatório no `localStorage`, sem
+cookie e sem dado pessoal), guarda a campanha de origem e registra a jornada:
+abriu a página, rolou 25/50/75/100%, começou o formulário, clicou no WhatsApp,
+converteu e saiu — junto com o tempo real de permanência.
+
+Quando o formulário é enviado, o lead leva esses ids: no painel dá para ver de
+qual campanha veio cada conversão e todo o caminho que a pessoa fez antes.
+
+Para desligar o rastreamento, use `rastrear: false`.
 
 ## Recursos já incluídos
 
