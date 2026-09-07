@@ -2,10 +2,10 @@
 
 Projeto **Vite** com duas partes no mesmo deploy:
 
-| Parte | Onde | Como é feita |
+| Parte | Onde | O que é |
 | --- | --- | --- |
-| Landing page de captação | `/` | HTML, CSS e JS puro, sem framework |
-| Painel administrativo | `/admin` | SPA em React, consumindo a API |
+| Landing page de captação | `/` | App React: seções em componentes, textos em `src/site/conteudo.js` |
+| Painel administrativo | `/admin` | App React que consome a API |
 
 Também fazem parte do site:
 
@@ -30,8 +30,9 @@ npm run dev                    # http://localhost:5173 e /admin
 
 `npm run build` gera o `dist/`; `npm run preview` serve esse build.
 
-A landing page continua sendo HTML puro: dá para editar o `index.html` e ver o
-resultado sem saber nada de React. O Vite só junta as duas partes no build.
+Para editar o conteúdo da landing (benefícios, passos, tipos de imóvel, FAQ),
+mexa em `src/site/conteudo.js` — são listas de objetos, sem tocar em JSX. Nome,
+CRECI, WhatsApp e a URL da API ficam em `src/site/config.js`.
 
 ## Publicando na Vercel
 
@@ -54,32 +55,39 @@ bloqueia o login do painel e o rastreamento.
 ## Estrutura
 
 ```
-index.html                    landing page (HTML/CSS/JS puro)
-politica-de-privacidade.html
-404.html
-admin/index.html              entrada do painel React
+index.html                    casca da landing (meta tags, Meta Pixel, JSON-LD)
+src/site/
+├── main.jsx  App.jsx         montagem da página e ganchos de rolagem/revelação
+├── config.js                 nome, CRECI, WhatsApp, URL da API
+├── conteudo.js               textos das seções (benefícios, passos, imóveis, FAQ)
+├── lead.js                   máscara, validação, envio do lead e pixels
+├── estilo.css                todo o CSS da landing
+├── componentes/              cabeçalho, rodapé, marca, ícones, botão de WhatsApp
+└── secoes/                   hero, formulário, benefícios, processo, imóveis...
+admin/index.html              casca do painel
 src/admin/                    páginas, componentes e cliente da API do painel
+politica-de-privacidade.html  páginas estáticas, fora do React
+404.html
 public/uploads/               imagens, logo e favicon (servidos em /uploads/...)
-vite.config.js                build das quatro páginas + rota do painel no dev
+vite.config.js                entradas do build + rota do painel no dev
 vercel.json                   build, saída e rewrite do /admin
 ```
 
 ## O que editar antes de publicar
 
-Todo o conteúdo variável da landing está no bloco `CONFIG`, no início do
-`<script>` no fim do `index.html`:
+Todo o conteúdo variável da landing está em `src/site/config.js`:
 
 ```js
 const CONFIG = {
   nome:      'Rafael Moraes',
-  logo:      'uploads/logo.png',
+  logo:      '/uploads/logo.png',
   creci:     '00000',                // <- ainda pendente
   regiao:    'Novo Hamburgo e região',
   email:     'rafaelmoraes@wallstreet.com.br',
   whatsapp:  '5551982606574',        // 55 + DDD + número (somente dígitos, sem o +)
   whatsappLabel: '(51) 98260-6574',
   mensagemWhatsApp: 'Olá! Vim pelo site e gostaria de falar sobre imóveis.',
-  api: 'https://api-rafael.pushagencia.com.br',  // backend (leads + rastreamento)
+  api: import.meta.env.VITE_API_URL || 'https://api-rafael.pushagencia.com.br',
   endpoint: '',                      // opcional: outro destino (webhook, CRM, Zapier)
   metodo:   'POST',
   rastrear: true,                    // rastrear visitantes, jornada e campanhas
@@ -87,8 +95,8 @@ const CONFIG = {
 };
 ```
 
-Esses valores são aplicados automaticamente no header, na seção do corretor,
-no rodapé e em todos os botões de WhatsApp.
+Esses valores são usados no cabeçalho, na seção do corretor, no rodapé e em
+todos os botões de WhatsApp — um lugar só, sem repetir em cada componente.
 
 Outros pontos que valem revisar:
 
@@ -101,7 +109,7 @@ Outros pontos que valem revisar:
   assim que o arquivo existir
 - imagens dos cards de imóveis e foto do corretor: cada bloco tem um
   `<!-- <img ...> -->` comentado, pronto para uso
-- cores: todas as variáveis ficam no bloco `:root`, no início do `<style>` — `--brand`
+- cores: todas as variáveis ficam no bloco `:root`, no início de `src/site/estilo.css` — `--brand`
   (preenchimento dos botões), `--brand-text` (bordô claro usado em textos e ícones sobre
   o fundo escuro), `--bg`, `--bg-soft`, `--surface` (cards) e `--field` (campos)
 

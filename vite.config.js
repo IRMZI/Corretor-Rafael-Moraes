@@ -2,10 +2,10 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'node:path';
 
-/* Projeto de duas partes no mesmo deploy:
-   - a landing page continua HTML/CSS/JS puro, em index.html (sem React);
-   - o painel administrativo e uma SPA React servida em /admin.
-   Cada HTML da raiz vira uma entrada do build. */
+/* Duas aplicacoes React no mesmo deploy:
+   - a landing page de captacao, em /
+   - o painel administrativo, em /admin
+   Politica de privacidade e 404 seguem como HTML estatico. */
 /* Em producao a Vercel reescreve /admin/* para /admin/index.html (vercel.json).
    Este plugin faz o mesmo no dev e no preview, para recarregar uma rota
    profunda do painel localmente nao cair em 404. */
