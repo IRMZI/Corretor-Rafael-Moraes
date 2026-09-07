@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Página não encontrada | Rafael Moraes - Corretor de Imóveis</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0A0B0D">
+<link rel="icon" type="image/png" href="/uploads/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --brand:#B3123A; --brand-dark:#CE1745; --brand-text:#E04A66;
+  --ink:#F4F6F8; --ink-2:#C4CAD2; --muted:#8A929C;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.20);
+  --bg:#0A0B0D; --surface:#14171B; --surface-2:#1A1E23;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; background:var(--bg); color:var(--ink-2);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  display:grid; place-items:center; padding:32px 20px; text-align:center;
+  -webkit-font-smoothing:antialiased; position:relative; overflow-x:hidden;
+}
+body::before{ /* brilho da marca ao fundo */
+  content:""; position:absolute; inset:-20% 20% 50% 20%;
+  background:radial-gradient(50% 50% at 50% 50%, rgba(179,18,58,.25), transparent 70%);
+  pointer-events:none;
+}
+.caixa{position:relative; max-width:520px}
+.logo-link{display:block; margin:0 0 40px}
+img.logo{height:44px; width:auto; margin:0 auto; object-fit:contain}
+.codigo{
+  display:inline-block; font-size:.75rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--brand-text); margin-bottom:14px;
+}
+h1{color:var(--ink); font-size:clamp(1.6rem,5vw,2.25rem); letter-spacing:-.03em; line-height:1.2; margin:0 0 14px}
+p{color:var(--muted); font-size:1rem; line-height:1.65; margin:0 0 30px}
+.acoes{display:flex; flex-wrap:wrap; gap:12px; justify-content:center}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:15px 24px; min-height:52px; border:1px solid transparent; border-radius:10px;
+  font-size:.9375rem; font-weight:600; text-decoration:none; cursor:pointer;
+  transition:background-color .25s var(--ease), border-color .25s var(--ease), transform .18s var(--ease);
+}
+.btn:active{transform:translateY(1px)}
+.btn--primary{background:var(--brand); color:#fff; box-shadow:0 8px 24px -10px rgba(179,18,58,.9)}
+.btn--primary:hover{background:var(--brand-dark)}
+.btn--ghost{background:var(--surface); color:var(--ink); border-color:var(--line-strong)}
+.btn--ghost:hover{background:var(--surface-2)}
+.btn svg{width:18px;height:18px;flex:none}
+</style>
+</head>
+<body>
+  <div class="caixa">
+    <a href="/" class="logo-link"><img class="logo" src="/uploads/logo.png" alt="Wall Street Imóveis" width="640" height="213"></a>
+    <span class="codigo">Erro 404</span>
+    <h1>Essa página não existe</h1>
+    <p>
+      O endereço pode ter mudado ou o link estar incompleto.
+      Volte ao início para ver os imóveis disponíveis ou fale direto com o corretor.
+    </p>
+    <div class="acoes">
+      <a href="/#formulario" class="btn btn--primary">
+        Encontrar meu imóvel
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="/" class="btn btn--ghost">Voltar ao início</a>
+    </div>
+  </div>
+</body>
+</html>
