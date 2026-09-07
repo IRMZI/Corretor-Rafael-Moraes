@@ -1,7 +1,8 @@
 # Landing page — Corretor de Imóveis
 
 Landing page de captação de leads em **HTML, CSS e JavaScript puro**, em arquivo único
-(`index.html`), sem frameworks e sem build.
+(`index.html`), sem frameworks e sem build. Tema escuro único (não acompanha o modo
+claro/escuro do sistema).
 
 ## Como publicar
 
@@ -15,11 +16,12 @@ Todo o conteúdo variável está no bloco `CONFIG`, no início do `<script>` no 
 ```js
 const CONFIG = {
   nome:      'Rafael Moraes',
-  creci:     '00000',
-  regiao:    'Sua cidade e região',
-  email:     'contato@seudominio.com.br',
-  whatsapp:  '5500000000000',        // 55 + DDD + número (somente dígitos)
-  whatsappLabel: '(00) 00000-0000',
+  logo:      'uploads/logo.png',
+  creci:     '00000',                // <- ainda pendente
+  regiao:    'Novo Hamburgo e região',
+  email:     'rafaelmoraes@wallstreet.com.br',
+  whatsapp:  '5551982606574',        // 55 + DDD + número (somente dígitos, sem o +)
+  whatsappLabel: '(51) 98260-6574',
   mensagemWhatsApp: 'Olá! Vim pelo site e gostaria de falar sobre imóveis.',
   endpoint: '',                      // webhook / CRM que vai receber os leads
   metodo:   'POST',
@@ -34,10 +36,14 @@ Outros pontos que valem revisar:
 
 - `<title>`, meta description, `og:url` e `link rel="canonical"` (topo do arquivo)
 - bloco de dados estruturados (JSON-LD), no fim do arquivo
-- logo: substitua o `<svg class="brand__mark">` por `<img src="logo.png" alt="...">`
+- imagens (logo, favicon, foto do corretor, fotos dos cards): veja `uploads/README.md`
+  — basta subir os arquivos com os nomes indicados. O logo e o favicon funcionam sozinhos
+  assim que o arquivo existir
 - imagens dos cards de imóveis e foto do corretor: cada bloco tem um
   `<!-- <img ...> -->` comentado, pronto para uso
-- cor de destaque: variável `--brand` no início do `<style>`
+- cores: todas as variáveis ficam no bloco `:root`, no início do `<style>` — `--brand`
+  (preenchimento dos botões), `--brand-text` (bordô claro usado em textos e ícones sobre
+  o fundo escuro), `--bg`, `--bg-soft`, `--surface` (cards) e `--field` (campos)
 - link da Política de Privacidade no rodapé
 
 ## Integração do formulário
@@ -79,3 +85,4 @@ Se quiser abrir a conversa do WhatsApp automaticamente após o envio, use
 - Ganchos prontos para GA4 (`gtag('event','generate_lead')`) e Meta Pixel (`fbq('track','Lead')`)
 - FAQ em accordion acessível, rolagem suave nos CTAs e botão flutuante de WhatsApp
 - Layout mobile-first, sem bibliotecas externas além da fonte Inter
+- Tema escuro em toda a página, com `color-scheme: dark` para os controles nativos
