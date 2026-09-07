@@ -1,7 +1,12 @@
 # Landing page — Corretor de Imóveis
 
-Landing page de captação de leads em **HTML, CSS e JavaScript puro**, em arquivo único
-(`index.html`), sem frameworks e sem build. Tema escuro único (não acompanha o modo
+Landing page de captação de leads em **HTML, CSS e JavaScript puro**, sem frameworks e
+sem build. São três páginas independentes:
+
+- `index.html` — a landing page
+- `politica-de-privacidade.html` — página linkada no rodapé (exigida pela LGPD e pelas
+  políticas de anúncio da Meta e do Google)
+- `404.html` — endereço inexistente, servida automaticamente pela Vercel Tema escuro único (não acompanha o modo
 claro/escuro do sistema).
 
 ## Como publicar
@@ -37,6 +42,8 @@ no rodapé e em todos os botões de WhatsApp.
 Outros pontos que valem revisar:
 
 - `<title>`, meta description, `og:url` e `link rel="canonical"` (topo do arquivo)
+- dados do responsável na `politica-de-privacidade.html` (CRECI, e-mail e, se houver,
+  razão social e CNPJ)
 - bloco de dados estruturados (JSON-LD), no fim do arquivo
 - imagens (logo, favicon, foto do corretor, fotos dos cards): veja `uploads/README.md`
   — basta subir os arquivos com os nomes indicados. O logo e o favicon funcionam sozinhos
@@ -46,7 +53,6 @@ Outros pontos que valem revisar:
 - cores: todas as variáveis ficam no bloco `:root`, no início do `<style>` — `--brand`
   (preenchimento dos botões), `--brand-text` (bordô claro usado em textos e ícones sobre
   o fundo escuro), `--bg`, `--bg-soft`, `--surface` (cards) e `--field` (campos)
-- link da Política de Privacidade no rodapé
 
 ## Integração com o backend
 
