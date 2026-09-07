@@ -6,23 +6,25 @@ exatos** — a página já aponta para eles.
 | Arquivo | Onde aparece | Tamanho sugerido |
 |---|---|---|
 | `logo.png` | header e rodapé (substitui a marca provisória automaticamente) | altura de 72px a 144px, fundo transparente |
-| `favicon.png` | ícone da aba do navegador | 192×192 |
-| `favicon.ico` | ícone da aba (navegadores antigos) | 32×32 |
-| `apple-touch-icon.png` | ícone ao salvar na tela inicial do iPhone | 180×180 |
-| `og-image.jpg` | prévia ao compartilhar no WhatsApp e redes sociais | 1200×630 |
-| `corretor.jpg` | foto na seção "Quem vai te atender" | 840×1050 (retrato 4:5) |
-| `apartamentos.jpg` | card de apartamentos | 800×550 (16:11) |
-| `casas.jpg` | card de casas | 800×550 (16:11) |
-| `terrenos.jpg` | card de terrenos | 800×550 (16:11) |
+| `favicon.png` | ícone da aba do navegador e ícone do iPhone | 256×256 |
+| `corretor.jpg` | foto na seção "Quem vai te atender" | recorte 4:5 |
+| `apartamentos.jpg` | card de apartamentos | recorte 16:11 |
+| `casas.jpeg` | card de casas | recorte 16:11 |
+| `terrenos.jpeg` | card de terrenos | recorte 16:11 |
+| `og-image.jpg` | prévia ao compartilhar (ainda não existe) | 1200×630 |
 
 ## Importante
 
-- **`logo.png`, `favicon.*`, `apple-touch-icon.png` e `og-image.jpg`**: é só subir o arquivo,
-  nada mais precisa ser alterado no `index.html`.
-- **`corretor.jpg` e as fotos dos cards de imóveis**: além de subir o arquivo, descomente
-  a linha `<!-- <img src="uploads/..."> -->` correspondente no `index.html`. Cada bloco
-  já tem a tag pronta, logo acima do ícone de placeholder.
-- Comprima as fotos antes de subir (ex.: [squoosh.app](https://squoosh.app)) — o ideal é
-  cada imagem ficar abaixo de 200 KB, para a página continuar rápida.
+- **Trocar uma foto**: suba o arquivo novo com o mesmo nome e pronto. Se o nome ou a
+  extensão mudarem, atualize o `src` da tag `<img>` correspondente no `index.html`.
+- **Enquadramento**: as fotos dos cards entram num recorte 16:11 e a do corretor num 4:5,
+  sempre pelo centro. Quando o assunto não está no meio da foto, dá para ajustar com
+  `style="object-position:center 55%"` na própria tag — é o que a foto da casa usa, para
+  mostrar a casa em vez do céu.
+- **Peso**: comprima antes de subir (ex.: [squoosh.app](https://squoosh.app)). O ideal é
+  cada foto ficar abaixo de 200 KB e não passar de 1200px no maior lado — acima disso a
+  página fica lenta no celular sem ganho nenhum de qualidade na tela.
+- **`og-image.jpg`** (1200×630) ainda não existe: enquanto isso, a prévia ao compartilhar
+  usa `apartamentos.jpg`.
 - No rodapé escuro o logo é exibido em branco por um filtro CSS. Para manter as cores
   originais, remova a regra `.footer img.brand__mark{filter:...}` do `index.html`.

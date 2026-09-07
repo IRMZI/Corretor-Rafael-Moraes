@@ -8,9 +8,8 @@
 <meta name="theme-color" content="#0A0B0D">
 
 <!-- Favicon — arquivos na pasta uploads/ (veja uploads/README.md) -->
-<link rel="icon" href="uploads/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="uploads/favicon.png">
-<link rel="apple-touch-icon" href="uploads/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="uploads/favicon.png">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://www.seudominio.com.br/">
 
@@ -20,7 +19,8 @@
 <meta property="og:title" content="Encontre seu imóvel ideal | Corretor de Imóveis">
 <meta property="og:description" content="Encontre casas, apartamentos, terrenos e oportunidades imobiliárias com atendimento personalizado.">
 <meta property="og:url" content="https://www.seudominio.com.br/">
-<meta property="og:image" content="https://www.seudominio.com.br/uploads/og-image.jpg">
+<!-- Prévia ao compartilhar: troque por uma imagem 1200x630 quando tiver uma -->
+<meta property="og:image" content="https://www.seudominio.com.br/uploads/apartamentos.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <!-- Meta Pixel — troque o ID em fbq('init', ...) se mudar de conta -->
@@ -368,10 +368,10 @@ img.brand__mark{width:auto; height:38px; max-width:190px; object-fit:contain} /*
   position:relative; aspect-ratio:16/11; background:linear-gradient(140deg,#181C21 0%,#111419 55%,#1B1216 100%);
   display:grid; place-items:center; color:#3D444C; border-bottom:1px solid var(--line); overflow:hidden;
 }
-.prop__media img{width:100%;height:100%;object-fit:cover}
+.prop__media img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
 .prop__media svg{width:44px;height:44px}
 .prop__tag{
-  position:absolute; top:14px; left:14px;
+  position:absolute; top:14px; left:14px; z-index:2;
   background:rgba(10,11,13,.78); color:var(--ink); border:1px solid var(--line);
   -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
   font-size:.6875rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
@@ -394,7 +394,7 @@ img.brand__mark{width:auto; height:38px; max-width:190px; object-fit:contain} /*
   background:linear-gradient(160deg,#171A1F,#0E1013); display:grid; place-items:center; color:#3D444C;
   box-shadow:var(--shadow);
 }
-.broker__photo img{width:100%;height:100%;object-fit:cover}
+.broker__photo img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
 .broker__photo svg{width:64px;height:64px}
 .broker__badge{
   position:absolute; left:16px; bottom:16px; right:16px;
@@ -805,8 +805,8 @@ src="https://www.facebook.com/tr?id=1011306658228860&ev=PageView&noscript=1"></n
         <article class="prop reveal">
           <div class="prop__media">
             <span class="prop__tag">Apartamentos</span>
-            <!-- <img src="uploads/apartamentos.jpg" alt="Apartamentos" loading="lazy" width="800" height="550"> -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 21V6l6-3v18M14 21V10l6-3v14M7 8h.01M7 12h.01M7 16h.01M17 12h.01M17 16h.01"/></svg>
+            <img src="uploads/apartamentos.jpg" alt="Prédio residencial em Novo Hamburgo"
+                 loading="lazy" decoding="async" width="781" height="755">
           </div>
           <div class="prop__body">
             <h3>Apartamentos</h3>
@@ -818,8 +818,10 @@ src="https://www.facebook.com/tr?id=1011306658228860&ev=PageView&noscript=1"></n
         <article class="prop reveal">
           <div class="prop__media">
             <span class="prop__tag">Casas</span>
-            <!-- <img src="uploads/casas.jpg" alt="Casas" loading="lazy" width="800" height="550"> -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10Z"/></svg>
+            <!-- foto em pé: o enquadramento privilegia a parte de cima da casa -->
+            <img src="uploads/casas.jpeg" alt="Casa de dois pavimentos com pátio"
+                 loading="lazy" decoding="async" width="900" height="1200"
+                 style="object-position:center 55%">
           </div>
           <div class="prop__body">
             <h3>Casas</h3>
@@ -831,8 +833,8 @@ src="https://www.facebook.com/tr?id=1011306658228860&ev=PageView&noscript=1"></n
         <article class="prop reveal">
           <div class="prop__media">
             <span class="prop__tag">Terrenos</span>
-            <!-- <img src="uploads/terrenos.jpg" alt="Terrenos" loading="lazy" width="800" height="550"> -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 19h18M5 19V9l7-4 7 4v10M9 19v-5h6v5"/></svg>
+            <img src="uploads/terrenos.jpeg" alt="Vista aérea de loteamento em Novo Hamburgo"
+                 loading="lazy" decoding="async" width="1200" height="901">
           </div>
           <div class="prop__body">
             <h3>Terrenos</h3>
@@ -851,8 +853,8 @@ src="https://www.facebook.com/tr?id=1011306658228860&ev=PageView&noscript=1"></n
     <div class="container broker">
       <!-- Espaço para a foto do corretor -->
       <div class="broker__photo reveal">
-        <!-- <img src="uploads/corretor.jpg" alt="Rafael Moraes, corretor de imóveis" loading="lazy" width="840" height="1050"> -->
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="12" cy="9" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+        <img src="uploads/corretor.jpg" alt="Rafael Moraes na entrada da Wall Street Imóveis"
+             loading="lazy" decoding="async" width="785" height="784" style="object-position:center 30%">
         <div class="broker__badge">
           <strong data-brand-name>Rafael Moraes</strong>
           <span>Corretor de Imóveis · CRECI <span data-creci>00000</span></span>
