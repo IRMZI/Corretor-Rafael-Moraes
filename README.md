@@ -5,7 +5,7 @@ Projeto **Vite** com duas partes no mesmo deploy:
 | Parte | Onde | O que é |
 | --- | --- | --- |
 | Landing page de captação | `/` | App React: seções em componentes, textos em `src/site/conteudo.js` |
-| Painel administrativo | `/admin` | App React que consome a API |
+| Painel administrativo | `/admin` | App React que consome a API pela própria origem |
 
 Também fazem parte do site:
 
@@ -36,9 +36,18 @@ CRECI, WhatsApp e a URL da API ficam em `src/site/config.js`.
 
 ## Publicando na Vercel
 
-O `vercel.json` já traz tudo: build `npm run build`, saída `dist` e o rewrite que
-faz as rotas internas do painel (`/admin/conversoes`, `/admin/visitantes`)
-funcionarem ao recarregar a página.
+O `vercel.json` já traz tudo: build `npm run build`, saída `dist` e dois rewrites:
+
+- `/admin/*` → `admin/index.html`, para as rotas internas do painel
+  (`/admin/conversoes`, `/admin/visitantes`) funcionarem ao recarregar a página;
+- `/api/admin/*` → a API, para o painel falar com ela **pela própria origem**.
+
+Esse segundo rewrite não é detalhe de organização: é o que mantém o cookie de
+sessão como cookie próprio do site. Chamando a API direto no domínio dela, o
+cookie vira cookie de terceiros — o Safari bloqueia por padrão, o Chrome bloqueia
+em janela anônima — e o login responde 200, mas a requisição seguinte volta 401 e
+o painel pisca de volta para a tela de login. Trocando o endereço da API, troque
+também no rewrite.
 
 Só falta cadastrar a variável de ambiente no projeto da Vercel:
 
@@ -46,11 +55,11 @@ Só falta cadastrar a variável de ambiente no projeto da Vercel:
 | --- | --- |
 | `VITE_API_URL` | `https://api-rafael.pushagencia.com.br` |
 
-Ela é lida **no build**, então depois de alterar é preciso um novo deploy. Sem
-ela, o painel usa esse mesmo endereço como padrão.
+Ela é lida **no build**, então depois de alterar é preciso um novo deploy. Ela vale
+para a landing page (envio do lead e rastreamento); o painel não a usa.
 
 O domínio do site precisa estar no `CORS_ORIGINS` da API — senão o navegador
-bloqueia o login do painel e o rastreamento.
+bloqueia o envio do lead e o rastreamento.
 
 ## Estrutura
 
@@ -124,7 +133,10 @@ e liga as três pontas de uma vez:
 | Envio do formulário | `POST {api}/api/leads` |
 | Rastreamento de visitantes e campanhas | `{api}/track.js` |
 
-O painel (`/admin`) fica neste mesmo site e usa a `VITE_API_URL`.
+O painel (`/admin`) fica neste mesmo site, mas chama `/api/admin/...` na própria
+origem: quem repassa para a API é o rewrite do `vercel.json` (e, no `npm run dev`,
+o proxy do `vite.config.js`). Para apontar o painel a outra API em
+desenvolvimento, use `VITE_ADMIN_API_URL`.
 
 Deixando `api: ''` (e sem `endpoint`), o formulário volta ao modo demonstração:
 valida os campos, exibe a mensagem de sucesso e imprime o lead no console.

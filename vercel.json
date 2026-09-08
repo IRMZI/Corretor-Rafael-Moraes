@@ -5,13 +5,28 @@
   "framework": "vite",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/admin", "destination": "/admin/index.html" },
-    { "source": "/admin/:caminho*", "destination": "/admin/index.html" }
+    {
+      "source": "/api/admin/:caminho*",
+      "destination": "https://api-rafael.pushagencia.com.br/api/admin/:caminho*"
+    },
+    {
+      "source": "/admin",
+      "destination": "/admin/index.html"
+    },
+    {
+      "source": "/admin/:caminho*",
+      "destination": "/admin/index.html"
+    }
   ],
   "headers": [
     {
       "source": "/admin/:caminho*",
-      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     }
   ]
 }
