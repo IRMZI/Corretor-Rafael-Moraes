@@ -1,6 +1,18 @@
-/* Cliente da API. O painel roda em outro dominio (Vercel) e a sessao vive num
-   cookie do dominio da API, entao toda chamada precisa de credentials. */
-export const URL_API = (import.meta.env.VITE_API_URL || 'https://api-rafael.pushagencia.com.br').replace(/\/+$/, '');
+/* Cliente da API.
+ *
+ * As chamadas do painel saem para a PROPRIA origem (/api/admin/...), e a Vercel
+ * as reescreve para a API (vercel.json). Isso e o que mantem o cookie de sessao
+ * como cookie proprio do site.
+ *
+ * Chamando a API direto no dominio dela, o cookie vira cookie de terceiros: o
+ * Safari bloqueia por padrao, e o Chrome bloqueia em janela anonima e para quem
+ * desliga cookies de terceiros. O login respondia 200, o navegador descartava o
+ * cookie, a requisicao seguinte voltava 401 e o painel piscava de volta para a
+ * tela de login - so para algumas pessoas, dependendo do navegador.
+ *
+ * VITE_ADMIN_API_URL existe para apontar o painel para outra API em
+ * desenvolvimento. Vazio (o padrao) significa mesma origem. */
+export const URL_API = (import.meta.env.VITE_ADMIN_API_URL || '').replace(/\/+$/, '');
 
 export class ErroApi extends Error {
   constructor(mensagem, status, detalhes) {

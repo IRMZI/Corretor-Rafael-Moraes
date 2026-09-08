@@ -42,7 +42,16 @@ export default defineConfig({
       }
     }
   },
+  /* No dev o painel tambem chama /api/admin na propria origem: este proxy faz o
+     papel do rewrite da Vercel, para o cookie de sessao ser um cookie proprio de
+     localhost como e em producao. */
   server: {
-    port: 5173
+    port: 5173,
+    proxy: {
+      '/api/admin': {
+        target: process.env.VITE_API_URL || 'https://api-rafael.pushagencia.com.br',
+        changeOrigin: true
+      }
+    }
   }
 });
